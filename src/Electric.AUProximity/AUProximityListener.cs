@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.SignalR;
 namespace Electric.AUProximity
 {
     public class AUProximityListener : IEventListener
-    { 
+    {
         private readonly IHubContext<ProximityHub, IProximityHub> _proximityHub;
 
         public AUProximityListener(IHubContext<ProximityHub, IProximityHub> proximityHub)
@@ -55,10 +55,13 @@ namespace Electric.AUProximity
             // Called when MeetingHud RPC VotingComplete has a player to be voted out.
             _proximityHub.Clients.Group(e.Game.Code).PlayerExiled(e.PlayerControl.PlayerInfo.PlayerName);
         }
+
+        // This event requires a custom fork of Impostor
+#if FORK
         [EventListener]
         public void RepairSystem(IPlayerRepairSystemEvent e)
         {
-            if (e.SystemType == SystemTypes.Sabotage && (SystemTypes) e.Amount == SystemTypes.Comms)
+            if (e.SystemType == SystemTypes.Sabotage && (SystemTypes)e.Amount == SystemTypes.Comms)
             {
                 // Skeld, MiraHQ, or Polus Comms has been sabotaged
                 _proximityHub.Clients.Group(e.Game.Code).CommsSabotage(false);
@@ -68,7 +71,7 @@ namespace Electric.AUProximity
                 if (e.Amount == 1)
                 {
                     _proximityHub.Clients.Group(e.Game.Code).CommsSabotage(false);
-                    
+
                 }
                 else
                 {
@@ -76,6 +79,8 @@ namespace Electric.AUProximity
                 }
             }
         }
+#endif
+
         [EventListener]
         public void GameEnd(IGameEndedEvent e)
         {
