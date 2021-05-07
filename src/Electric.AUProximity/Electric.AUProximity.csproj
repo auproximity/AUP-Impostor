@@ -5,10 +5,14 @@
         <OutputType>Library</OutputType>
         <RootNamespace>Electric.AUProximity</RootNamespace>
         <Nullable>enable</Nullable>
+
+        <Version>0.2.1</Version>
+        <AssemblyTitle>Plugin for AUProximity</AssemblyTitle>
+        <Authors>Cydon, miniduikboot</Authors>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Impostor\src\Impostor.Api\Impostor.Api.csproj" />
+      <ProjectReference Include="$(Impostor)\src\Impostor.Api\Impostor.Api.csproj" />
     </ItemGroup>
 
 </Project>

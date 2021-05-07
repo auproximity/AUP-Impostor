@@ -21,7 +21,10 @@ namespace Electric.AUProximity.Hub
             if (game != null)
             {
                 await this.Clients.Group(gameCode).MapChange(game.Options.Map);
-                await this.Clients.Group(gameCode).HostChange(game.Host.Client.Name);
+                if (game.Host != null)
+                {
+                    await this.Clients.Group(gameCode).HostChange(game.Host.Client.Name);
+                }
             }
         }
     }

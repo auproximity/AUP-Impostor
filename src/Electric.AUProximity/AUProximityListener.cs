@@ -25,9 +25,13 @@ namespace Electric.AUProximity
         }
 
         [EventListener]
-        public void GameHostChangeEvent(IGameHostChangeEvent e)
+        public void GameHostChangedEvent(IGameHostChangedEvent e)
         {
-            _proximityHub.Clients.Group(e.Game.Code).HostChange(e.Host.Client.Name);
+            if (e.NewHost == null)
+            {
+                return; // No new host, game ending
+            }
+            _proximityHub.Clients.Group(e.Game.Code).HostChange(e.NewHost.Client.Name);
         }
 
         [EventListener]
